@@ -191,64 +191,61 @@
         end)
         Options.AutoUpgradeToggle:SetValue(false)
 
-        -- MAP:SKELETON HEEL STONE 
-            local autoPlaceEnabled = false
-        local function placeTowers()
-            if autoPlaceEnabled then
-                -- Pika
-                                local args = {
-                    [1] = "7278445232:50",
-                    [2] = Vector3.new(-655.709228515625, 509.85272216796875, 178.39761352539062),
-                    [3] = 0
-                }
-                
-                game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(args))
-                                Fluent:Notify({
-                Title = "Unit Placed",
-                Content = "Place Pika",
-                Duration = 5
-            })
-                
-                
-                local args = {
-                    [1] = "7278445232:50",
-                    [2] = Vector3.new(-650.1400756835938, 509.8526916503906, 178.034912109375),
-                    [3] = 0
-                }
-                
-                game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(args))
-                                            Fluent:Notify({
-                Title = "Unit Placed",
-                Content = "Place Pika",
-                Duration = 5
-            })
-                
-                
-                local args = {
-                    [1] = "7278445232:56",
-                    [2] = Vector3.new(-651.108154296875, 509.852783203125, 181.02072143554688),
-                    [3] = 0
-                }
-                
-                game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(args))
-                    Fluent:Notify({
-                Title = "Unit Placed",
-                Content = "Place Goku",
-                Duration = 5
-            })
-            end
-        end
-        local ToggleAutoPlace = Tabs.Unit:AddToggle("AutoPlaceToggle", 
-                {Title = "Farm Valley of the end", 
-                Description = "Pika,goku",
-                Default = false })
-        ToggleAutoPlace:OnChanged(function()
-            autoPlaceEnabled = Options.AutoPlaceToggle.Value
-            if autoPlaceEnabled then
-                placeTowers()
-            end
-        end)
-        Options.AutoPlaceToggle:SetValue(false)
+ -- MAP: valley of the end
+local autoPlaceEnabled = false
+local autoPlaceThread
+
+local function placeTowers()
+    while autoPlaceEnabled do
+        -- Pika
+        local args1 = {
+            [1] = "7278445232:50",
+            [2] = Vector3.new(-655.709228515625, 509.85272216796875, 178.39761352539062),
+            [3] = 0
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(args1))
+
+
+            -- Another Pika
+        local args3 = {
+            [1] = "7278445232:56",
+            [2] = Vector3.new(-651.108154296875, 509.852783203125, 181.02072143554688),
+            [3] = 0
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(args3))
+        
+        -- Goku
+        local args2 = {
+            [1] = "7278445232:50",
+            [2] = Vector3.new(-650.1400756835938, 509.8526916503906, 178.034912109375),
+            [3] = 0
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(args2))
+        
+        
+
+        wait(1) -- Đặt độ trễ giữa mỗi lần đặt unit
+    end
+end
+
+local ToggleAutoPlace = Tabs.Unit:AddToggle("AutoPlaceToggle", {
+    Title = "Farm Valley of the End", 
+    Description = "Pika, Goku",
+    Default = false
+})
+
+ToggleAutoPlace:OnChanged(function()
+    autoPlaceEnabled = Options.AutoPlaceToggle.Value
+    if autoPlaceEnabled then
+        autoPlaceThread = coroutine.create(placeTowers)
+        coroutine.resume(autoPlaceThread)
+    else
+        autoPlaceEnabled = false
+    end
+end)
+
+Options.AutoPlaceToggle:SetValue(false)
+
 
         --TELEPORT TO MAP SELECT
         local TeleportToggle = Tabs.Play:AddToggle("TeleportToggle", {
