@@ -264,7 +264,7 @@ Options.AutoPlaceToggle:SetValue(false)
                 local randomTeleporter = teleporters[math.random(1, #teleporters)]
                 local worldPivot = randomTeleporter.WorldPivot
                 if worldPivot then
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(worldPivot.Position)
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(worldPivot.Position + Vector3.new(0, 5, 0))
                 end
             end
         end
