@@ -1,5 +1,4 @@
 
-    setfpscap(60)
     wait(1)
     local Players = game:service('Players')
     local VirtualUser = game:service('VirtualUser')
