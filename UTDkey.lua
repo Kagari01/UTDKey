@@ -191,7 +191,7 @@
         end)
         Options.AutoUpgradeToggle:SetValue(false)
 
- -- MAP: valley of the end
+-- MAP: valley of the end
 local autoPlaceEnabled = false
 local autoPlaceThread
 
@@ -205,8 +205,7 @@ local function placeTowers()
         }
         game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(args1))
 
-
-            -- Another Pika
+        -- Another Pika
         local args3 = {
             [1] = "7278445232:56",
             [2] = Vector3.new(-651.108154296875, 509.852783203125, 181.02072143554688),
@@ -222,9 +221,13 @@ local function placeTowers()
         }
         game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(args2))
         
-        
+
 
         wait(1) -- Đặt độ trễ giữa mỗi lần đặt unit
+        
+        if not autoPlaceEnabled then -- Kiểm tra nếu toggle bị tắt
+            break
+        end
     end
 end
 
@@ -237,14 +240,17 @@ local ToggleAutoPlace = Tabs.Unit:AddToggle("AutoPlaceToggle", {
 ToggleAutoPlace:OnChanged(function()
     autoPlaceEnabled = Options.AutoPlaceToggle.Value
     if autoPlaceEnabled then
+        -- Khi bật toggle, bắt đầu vòng lặp
         autoPlaceThread = coroutine.create(placeTowers)
         coroutine.resume(autoPlaceThread)
     else
+        -- Khi tắt toggle, dừng vòng lặp
         autoPlaceEnabled = false
     end
 end)
 
 Options.AutoPlaceToggle:SetValue(false)
+
 
 
         --TELEPORT TO MAP SELECT
