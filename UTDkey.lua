@@ -405,6 +405,36 @@ Options.AutoPlaceToggle:SetValue(false)
             end
         end)
 
+    -- Thêm input cho người dùng nhập số FPS
+local Input = Tabs.Misc:AddInput("FPSInput", {
+    Title = "Set FPS",
+    Default = "60", -- FPS mặc định
+    Placeholder = "Enter FPS",
+    Numeric = true, -- Chỉ cho phép số
+    Finished = true, -- Chỉ gọi callback khi nhấn Enter
+    Callback = function(Value)
+        local fps = tonumber(Value) -- Chuyển đổi giá trị nhập vào thành số
+        if fps and fps > 0 then -- Kiểm tra nếu giá trị hợp lệ
+            setfpscap(fps) -- Đặt giới hạn FPS
+            print("FPS set to:", fps)
+        else
+            print("Invalid FPS value:", Value)
+        end
+    end
+})
+
+-- Lắng nghe sự thay đổi giá trị nhập
+Input:OnChanged(function()
+    local fps = tonumber(Input.Value) -- Lấy giá trị và chuyển thành số
+    if fps and fps > 0 then
+        setfpscap(fps) -- Cập nhật FPS khi giá trị thay đổi
+        print("FPS updated to:", fps)
+    else
+        print("Invalid FPS value:", Input.Value)
+    end
+end)
+
+
 
 
 
