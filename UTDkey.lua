@@ -1,7 +1,4 @@
 
-local key = getgenv().key
-if key == "1234" then
-
     setfpscap(60)
     wait(1)
     local Players = game:service('Players')
@@ -392,4 +389,3 @@ if key == "1234" then
 
     SaveManager:LoadAutoloadConfig()
 
-end
