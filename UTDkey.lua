@@ -86,7 +86,7 @@
         local function autoReplay()
             while autoReplayEnabled do
                 game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("GlobalInit"):WaitForChild("RemoteEvents"):WaitForChild("PlayerVoteReplay"):FireServer()
-                wait(5)
+                wait(3)
             end
         end
         local ToggleAutoReplay = Tabs.Main:AddToggle("AutoReplayToggle", {Title = "Auto Replay", Default = false })
