@@ -195,31 +195,45 @@
             local autoPlaceEnabled = false
         local function placeTowers()
             if autoPlaceEnabled then
-                -- Zero
-                wait(3)
-                local zeroTowerArgs = {
-                    [1] = "1344450501:327",
-                    [2] = Vector3.new(-725.1512451171875, 332.6009216308594, 250.34649658203125), 
-                    [3] = 0 
-                }
-                game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(zeroTowerArgs))
-                    Fluent:Notify({
-                Title = "Unit Placed",
-                Content = "Zero has been placed",
-                Duration = 5
-            })
-
-    -- Beast Titan
-                wait(200) 
-                local titanMonkeyArgs = {
-                    [1] = "1344450501:498", 
-                    [2] = Vector3.new(-697.0626220703125, 332.6007995605469, 215.04104614257812), 
+                -- Pika
+                                local args = {
+                    [1] = "7278445232:50",
+                    [2] = Vector3.new(-655.709228515625, 509.85272216796875, 178.39761352539062),
                     [3] = 0
                 }
-                game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(titanMonkeyArgs))
+                
+                game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(args))
+                                Fluent:Notify({
+                Title = "Unit Placed",
+                Content = "Place Pika",
+                Duration = 5
+            })
+                
+                
+                local args = {
+                    [1] = "7278445232:50",
+                    [2] = Vector3.new(-650.1400756835938, 509.8526916503906, 178.034912109375),
+                    [3] = 0
+                }
+                
+                game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(args))
+                                            Fluent:Notify({
+                Title = "Unit Placed",
+                Content = "Place Pika",
+                Duration = 5
+            })
+                
+                
+                local args = {
+                    [1] = "7278445232:56",
+                    [2] = Vector3.new(-651.108154296875, 509.852783203125, 181.02072143554688),
+                    [3] = 0
+                }
+                
+                game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(args))
                     Fluent:Notify({
                 Title = "Unit Placed",
-                Content = "Beast Titan has been placed",
+                Content = "Place Goku",
                 Duration = 5
             })
             end
