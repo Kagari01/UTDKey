@@ -239,8 +239,8 @@
             end
         end
         local ToggleAutoPlace = Tabs.Unit:AddToggle("AutoPlaceToggle", 
-                {Title = "Farm Skeleton Hell Stone", 
-                Description = "Zero,Beast Titan(200)",
+                {Title = "Farm Valley of the end", 
+                Description = "Pika,goku",
                 Default = false })
         ToggleAutoPlace:OnChanged(function()
             autoPlaceEnabled = Options.AutoPlaceToggle.Value
