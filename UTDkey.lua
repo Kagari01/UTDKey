@@ -154,6 +154,26 @@
         end)
         Options.AutoSummonToggle:SetValue(false)
 
+    --MESSAGE GUI
+local ToggleMessageGuiButton = Tabs.Main:AddToggle("ToggleMessageGui", {
+    Title = "Disable Message",
+    Default = false
+})
+
+local player = game.Players.LocalPlayer
+local messagesGui = player.PlayerGui:WaitForChild("MessagesGui")
+
+ToggleMessageGuiButton:OnChanged(function(isEnabled)
+    if isEnabled then
+        -- Tắt MessageGui khi bật toggle
+        messagesGui.Enabled = false
+    else
+        -- Bật MessageGui khi tắt toggle
+        messagesGui.Enabled = true
+    end
+end)
+
+
         -- UNIT 
 
         Tabs.Unit:AddParagraph({
