@@ -1,4 +1,4 @@
-print('Kích hoạt Weebhook')
+print('Kích hoạt Weebhook rồi nhaaaaa')
 local HttpService = game:GetService("HttpService")
 local Webhook_URL = "https://discord.com/api/webhooks/1268077253313695766/Wt5tXr4kwtJAZB9A9iTCuvuUAduu54MiHTF0vph2oyQmRF3t3Af_huuybr60Ec7U31t2" -- Webhook
 
