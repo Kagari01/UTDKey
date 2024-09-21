@@ -37,6 +37,7 @@
         Main = Window:AddTab({ Title = "Main", Icon = "aperture" }),
         Unit = Window:AddTab({ Title = "Unit", Icon = "eye"}),
         Play = Window:AddTab({ Title = "Teleport", Icon = "chevrons-up" }),
+        WH = Window:AddTab({ Title = "WebHook", Icon = "bell" }),
         Misc = Window:AddTab({ Title = "Misc", Icon = "wifi-off" }),
         Settings = Window:AddTab({ Title = "Config", Icon = "settings" })
     }
@@ -433,6 +434,119 @@ Input:OnChanged(function()
         print("Invalid FPS value:", Input.Value)
     end
 end)
+
+
+--WEBHOOK
+    local HttpService = game:GetService("HttpService")
+local Webhook_URL = "" -- Webhook mặc định
+
+-- Biến để bật/tắt webhook
+local webhookEnabled = false
+
+-- Thêm input để thay đổi Webhook URL
+local WebhookInput = Tabs.WH:AddInput("WebhookInput", {
+    Title = "Webhook URL",
+    Default = Webhook_URL, -- URL mặc định
+    Placeholder = "link webhook",
+    Numeric = false, -- Cho phép nhập chuỗi
+    Finished = true, -- Chỉ gọi khi nhấn Enter
+    Callback = function(Value)
+        Webhook_URL = Value -- Cập nhật URL của webhook
+    end
+})
+
+-- Thêm toggle để bật/tắt webhook
+local WebhookToggle = Tabs.WH:AddToggle("WebhookToggle", {
+    Title = "Enable Webhook",
+    Default = false -- Mặc định là tắt
+})
+
+WebhookToggle:OnChanged(function(Value)
+    webhookEnabled = Value
+end)
+
+-- Hàm gửi request (chỉ gửi khi webhookEnabled là true)
+local function sendRequest(requestFunction)
+    if webhookEnabled then
+        local playerName = getPlayerName()
+        local currentGold = getCurrentGold()
+        local currentGem = getCurrentGem()
+        local goldReward = getGoldReward()
+        local expReward = getExpReward()
+        local levelUp = getLevel()
+        local expUp = getExp()
+        local roundtime = roundTime()
+        local wavedex = wave()
+        local victory = victoryorDef()
+
+        local jsonBody = HttpService:JSONEncode({
+            ["content"] = "",
+            ["embeds"] = {{
+                ["title"] = "Ultimate Tower Defense", 
+                ["type"] = "rich",
+                ["color"] = tonumber(0xffffff),
+                ["fields"] = {{
+                    ["name"] = "User:  " .. "||" .. playerName .. "||",
+                    ["value"] = "",
+                    ["inline"] = false
+                }, {
+                    ["name"] = "" .. levelUp .. "\n" .. expUp,
+                    ["value"] = "",  
+                    ["inline"] = false
+                }, {
+                    ["name"] = "Player Stats",
+                    ["value"] = "Gold: " .. currentGold .. "\nGem: " .. currentGem,
+                    ["inline"] = true
+                }, {
+                    ["name"] = "Rewards",
+                    ["value"] = "" .. goldReward .. "\n" .. expReward,
+                    ["inline"] = true
+                }, {
+                    ["name"] = "Match Info",
+                    ["value"] = roundtime .. "\n" .. wavedex .. "\n" .. victory,
+                    ["inline"] = false,
+                }}
+            }}
+        })
+
+        requestFunction({
+            Url = Webhook_URL,
+            Method = "POST",
+            Headers = {
+                ['Content-Type'] = "application/json"
+            },
+            Body = jsonBody
+        })
+    end
+end
+
+-- Theo dõi thuộc tính Visible của RoundOver
+local function monitorRoundOver()
+    local player = game:GetService("Players").LocalPlayer
+    local roundOverFrame = player.PlayerGui.MainGui.MainFrames.RoundOver
+    local debounce = false
+
+    roundOverFrame:GetPropertyChangedSignal("Visible"):Connect(function()
+        if roundOverFrame.Visible and not debounce then
+            debounce = true -- Đặt cờ để không gửi lại
+            -- Gửi request khi RoundOver bật
+            local requestFunction = (syn and syn.request) or (http_request) or (request)
+            if requestFunction then
+                sendRequest(requestFunction)
+            else
+                warn("Không có chức năng yêu cầu HTTP khả dụng.")
+            end
+
+            -- Sau khi xử lý, đợi một thời gian trước khi reset debounce
+            wait(1) -- Có thể thay đổi khoảng thời gian này nếu cần
+            debounce = false
+        end
+    end)
+end
+
+-- Bắt đầu theo dõi
+monitorRoundOver()
+
 
 
 
