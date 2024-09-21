@@ -438,97 +438,138 @@ end)
 
 --WEBHOOK
 local HttpService = game:GetService("HttpService")
-local Webhook_URL = "https://discord.com/api/webhooks/1286637087201820683/X_SALANxKYAznoRJkXbSmDtirh4O0F6Udk-1jGfWO00uFK3Sy5pXK1vEuCwnVym3yiMd" -- Webhook mặc định
+local Webhook_URL = "" -- Webhook mặc định trống
 
--- Biến để bật/tắt webhook
-local webhookEnabled = false
-
--- Thêm input để thay đổi Webhook URL
-local WebhookInput = Tabs.WH:AddInput("WebhookInput", {
+-- Thêm input cho người chơi nhập URL webhook
+local WebhookInput = Tabs.Main:AddInput("WebhookInput", {
     Title = "Webhook URL",
-    Default = Webhook_URL, -- URL mặc định
-    Placeholder = "Nhập link webhook",
+    Default = "",
+    Placeholder = "Nhập URL webhook",
     Numeric = false, -- Cho phép nhập chuỗi
-    Finished = true, -- Chỉ gọi khi nhấn Enter
+    Finished = true, -- Gọi callback khi nhấn Enter
     Callback = function(Value)
-        Webhook_URL = Value -- Cập nhật URL của webhook
-        print("Webhook URL set to:", Webhook_URL)
+        Webhook_URL = Value -- Cập nhật giá trị Webhook_URL
+        print("Webhook URL đã được cập nhật:", Webhook_URL)
     end
 })
 
--- Thêm toggle để bật/tắt webhook
-local WebhookToggle = Tabs.WH:AddToggle("WebhookToggle", {
-    Title = "Enable Webhook",
-    Default = false -- Mặc định là tắt
-})
 
-WebhookToggle:OnChanged(function(Value)
-    webhookEnabled = Value
-    if webhookEnabled then
-        print("Webhook enabled")
-    else
-        print("Webhook disabled")
-    end
-end)
+-- Lấy tên người chơi
+local function getPlayerName()
+    local player = game:GetService("Players").LocalPlayer
+    return player.Name
+end
 
--- Hàm gửi request (chỉ gửi khi webhookEnabled là true)
+-- Lấy số lượng Gold hiện tại
+local function getCurrentGold()
+    local player = game:GetService("Players").LocalPlayer
+    return player.PlayerGui.MainGui.HUD.Currencies.Gold.amount.Text
+end
+
+-- Lấy số lượng Gem hiện tại
+local function getCurrentGem()
+    local player = game:GetService("Players").LocalPlayer
+    return player.PlayerGui.MainGui.HUD.Currencies.Gem.amount.Text
+end
+
+--gold sau reward
+local function getGoldReward()
+    local player = game:GetService("Players").LocalPlayer
+    return player.PlayerGui.MainGui.MainFrames.RoundOver.Reward.Gains.Gold.Text
+end
+
+--exp sau reward
+local function getExpReward()
+    local player = game:GetService("Players").LocalPlayer
+    return player.PlayerGui.MainGui.MainFrames.RoundOver.Reward.Gains.Exp.Text
+end
+
+-- Lấy Level mà không lấy chữ
+local function getLevel()
+    local player = game:GetService("Players").LocalPlayer
+    return player.PlayerGui.MainGui.HUD.Toolbox.LevelBar.Level.Text
+end
+
+--Exp
+local function getExp()
+    local player = game:GetService("Players").LocalPlayer
+    return player.PlayerGui.MainGui.HUD.Toolbox.LevelBar.Exp.Text
+end
+
+--roundtime
+local function roundTime()
+    local player = game:GetService("Players").LocalPlayer
+    return player.PlayerGui.MainGui.MainFrames.RoundOver.RoundTime.Text
+end
+
+--wave
+local function wave()
+    local player = game:GetService("Players").LocalPlayer
+    return player.PlayerGui.MainGui.MainFrames.Wave.WaveIndex.Text
+end
+
+--victory
+local function victoryorDef()
+    local player = game:GetService("Players").LocalPlayer
+    return player.PlayerGui.MainGui.MainFrames.RoundOver.Victory.Text
+
+end
+
+
+-- Hàm gửi request
 local function sendRequest(requestFunction)
-    if webhookEnabled then
-        local playerName = getPlayerName()
-        local currentGold = getCurrentGold()
-        local currentGem = getCurrentGem()
-        local goldReward = getGoldReward()
-        local expReward = getExpReward()
-        local levelUp = getLevel()
-        local expUp = getExp()
-        local roundtime = roundTime()
-        local wavedex = wave()
-        local victory = victoryorDef()
+    local playerName = getPlayerName()
+    local currentGold = getCurrentGold()
+    local currentGem = getCurrentGem()
+    local goldReward = getGoldReward()
+    local expReward = getExpReward()
+    local levelUp = getLevel()
+    local expUp = getExp()
+    local roundtime = roundTime()
+    local wavedex = wave()
+    local victory = victoryorDef()
 
-        local jsonBody = HttpService:JSONEncode({
-            ["content"] = "",
-            ["embeds"] = {{
-                ["title"] = "Ultimate Tower Defense", 
-                ["type"] = "rich",
-                ["color"] = tonumber(0xffffff),
-                ["fields"] = {{
-                    ["name"] = "User:  " .. "||" .. playerName .. "||",
-                    ["value"] = "",
-                    ["inline"] = false
-                }, {
-                    ["name"] = "" .. levelUp .. "\n" .. expUp,
-                    ["value"] = "",  
-                    ["inline"] = false
-                }, {
-                    ["name"] = "Player Stats",
-                    ["value"] = "Gold: " .. currentGold .. "\nGem: " .. currentGem,
-                    ["inline"] = true
-                }, {
-                    ["name"] = "Rewards",
-                    ["value"] = "" .. goldReward .. "\n" .. expReward,
-                    ["inline"] = true
-                }, {
-                    ["name"] = "Match Info",
-                    ["value"] = roundtime .. "\n" .. wavedex .. "\n" .. victory,
-                    ["inline"] = false,
-                }}
+    local jsonBody = HttpService:JSONEncode({
+        ["content"] = "",
+        ["embeds"] = {{
+            ["title"] = "Ultimate Tower Defense", 
+            ["type"] = "rich",
+            ["color"] = tonumber(0xffffff),
+            ["fields"] = {{
+                ["name"] = "User:  " .. "||" .. playerName .. "||",
+                ["value"] = "",
+                ["inline"] = false  -- Hiển thị trên dòng riêng
+            }, {
+                ["name"] = "" .. levelUp .. "\n" .. expUp,
+                ["value"] = "",  
+                ["inline"] = false  -- Hiển thị trên dòng riêng
+            }, {
+                ["name"] = "Player Stats",
+                ["value"] = "Gold: " .. currentGold .. "\nGem: " .. currentGem,
+                ["inline"] = true  -- Hiển thị bên trái
+            }, {
+                ["name"] = "Rewards",
+                ["value"] = "" .. goldReward .. "\n" .. expReward,
+                ["inline"] = true  -- Hiển thị bên phải
+            },{
+                ["name"] = "Match Info",
+                ["value"] = roundtime .. "\n" .. wavedex .. "\n" .. victory,
+                ["inline"] = false,
             }}
-        })
+        }}
+    })
 
-        local response = requestFunction({
-            Url = Webhook_URL,
-            Method = "POST",
-            Headers = {
-                ['Content-Type'] = "application/json"
-            },
-            Body = jsonBody
-        })
+    local response = requestFunction({
+        Url = Webhook_URL,
+        Method = "POST",
+        Headers = {
+            ['Content-Type'] = "application/json"
+        },
+        Body = jsonBody
+    })
 
-        print("Response Status Code: ", response.StatusCode)
-        print("Response Body: ", response.Body)
-    else
-        print("Webhook is disabled, request not sent.")
-    end
+    print("Response Status Code: ", response.StatusCode)
+    print("Response Body: ", response.Body)
 end
 
 -- Theo dõi thuộc tính Visible của RoundOver
@@ -557,6 +598,7 @@ end
 
 -- Bắt đầu theo dõi
 monitorRoundOver()
+
 
 
 
