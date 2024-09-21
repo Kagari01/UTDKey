@@ -441,7 +441,7 @@ local HttpService = game:GetService("HttpService")
 local Webhook_URL = "" -- Webhook mặc định trống
 
 -- Thêm input cho người chơi nhập URL webhook
-local WebhookInput = Tabs.Main:AddInput("WebhookInput", {
+local WebhookInput = Tabs.WH:AddInput("WebhookInput", {
     Title = "Webhook URL",
     Default = "",
     Placeholder = "Nhập URL webhook",
