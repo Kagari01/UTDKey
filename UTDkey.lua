@@ -437,8 +437,8 @@ end)
 
 
 --WEBHOOK
-    local HttpService = game:GetService("HttpService")
-local Webhook_URL = "" -- Webhook mặc định
+local HttpService = game:GetService("HttpService")
+local Webhook_URL = "https://discord.com/api/webhooks/1286637087201820683/X_SALANxKYAznoRJkXbSmDtirh4O0F6Udk-1jGfWO00uFK3Sy5pXK1vEuCwnVym3yiMd" -- Webhook mặc định
 
 -- Biến để bật/tắt webhook
 local webhookEnabled = false
@@ -447,11 +447,12 @@ local webhookEnabled = false
 local WebhookInput = Tabs.WH:AddInput("WebhookInput", {
     Title = "Webhook URL",
     Default = Webhook_URL, -- URL mặc định
-    Placeholder = "link webhook",
+    Placeholder = "Nhập link webhook",
     Numeric = false, -- Cho phép nhập chuỗi
     Finished = true, -- Chỉ gọi khi nhấn Enter
     Callback = function(Value)
         Webhook_URL = Value -- Cập nhật URL của webhook
+        print("Webhook URL set to:", Webhook_URL)
     end
 })
 
@@ -463,6 +464,11 @@ local WebhookToggle = Tabs.WH:AddToggle("WebhookToggle", {
 
 WebhookToggle:OnChanged(function(Value)
     webhookEnabled = Value
+    if webhookEnabled then
+        print("Webhook enabled")
+    else
+        print("Webhook disabled")
+    end
 end)
 
 -- Hàm gửi request (chỉ gửi khi webhookEnabled là true)
@@ -509,7 +515,7 @@ local function sendRequest(requestFunction)
             }}
         })
 
-        requestFunction({
+        local response = requestFunction({
             Url = Webhook_URL,
             Method = "POST",
             Headers = {
@@ -517,6 +523,11 @@ local function sendRequest(requestFunction)
             },
             Body = jsonBody
         })
+
+        print("Response Status Code: ", response.StatusCode)
+        print("Response Body: ", response.Body)
+    else
+        print("Webhook is disabled, request not sent.")
     end
 end
 
@@ -546,6 +557,7 @@ end
 
 -- Bắt đầu theo dõi
 monitorRoundOver()
+
 
 
 
