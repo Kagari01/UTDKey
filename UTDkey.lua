@@ -330,8 +330,8 @@ local ToggleAutoPlaceM1 = Tabs.Unit:AddToggle("AutoPlaceToggleM1", {
     Default = false
 })
 
-ToggleAutoPlace:OnChanged(function()
-    autoPlaceEnabledM1 = Options.AutoPlaceToggle.Value
+ToggleAutoPlaceM1:OnChanged(function()
+    autoPlaceEnabledM1 = Options.AutoPlaceToggleM1.Value
     if autoPlaceEnabledM1 then
         -- Khi bật toggle, bắt đầu vòng lặp
         autoPlaceThreadM1 = coroutine.create(placeTowers)
