@@ -273,6 +273,78 @@ end)
 Options.AutoPlaceToggle:SetValue(false)
 
 
+    
+    --MAP TROST
+local autoPlaceEnabledM1 = false
+local autoPlaceThreadM1
+
+local function placeTowers()
+    while autoPlaceEnabledM1 do
+--pika
+            local args = {
+    [1] = "7278445232:50",
+    [2] = Vector3.new(-79.51715087890625, -7.038638114929199, 112.28866577148438),
+    [3] = 0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(args))
+
+            local args = {
+    [1] = "7278445232:50",
+    [2] = Vector3.new(-85.17617797851562, -7.038638114929199, 115.06765747070312),
+    [3] = 0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(args))
+--shank
+            local args = {
+    [1] = "7278445232:235",
+    [2] = Vector3.new(-80.18739318847656, -7.038638114929199, 107.5677490234375),
+    [3] = 0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(args))
+
+            local args = {
+    [1] = "7278445232:235",
+    [2] = Vector3.new(-84.18594360351562, -7.038638114929199, 109.19395446777344),
+    [3] = 0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(args))
+
+        
+
+
+        wait(1) -- Đặt độ trễ giữa mỗi lần đặt unit
+        
+        if not autoPlaceEnabledM1 then -- Kiểm tra nếu toggle bị tắt
+            break
+        end
+    end
+end
+
+local ToggleAutoPlaceM1 = Tabs.Unit:AddToggle("AutoPlaceToggleM1", {
+    Title = "Farm Trost", 
+    Description = "Pika, Shank",
+    Default = false
+})
+
+ToggleAutoPlace:OnChanged(function()
+    autoPlaceEnabledM1 = Options.AutoPlaceToggle.Value
+    if autoPlaceEnabledM1 then
+        -- Khi bật toggle, bắt đầu vòng lặp
+        autoPlaceThreadM1 = coroutine.create(placeTowers)
+        coroutine.resume(autoPlaceThreadM1)
+    else
+        -- Khi tắt toggle, dừng vòng lặp
+        autoPlaceEnabledM1 = false
+    end
+end)
+
+Options.ToggleAutoPlaceM1:SetValue(false)
+
+
 
         --TELEPORT TO MAP SELECT
         local TeleportToggle = Tabs.Play:AddToggle("TeleportToggle", {
