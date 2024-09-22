@@ -212,137 +212,137 @@ end)
         end)
         Options.AutoUpgradeToggle:SetValue(false)
 
--- MAP: valley of the end
-local autoPlaceEnabled = false
-local autoPlaceThread
-
-local function placeTowers()
-    while autoPlaceEnabled do
-        -- Pika
-        local args1 = {
-            [1] = "7278445232:50",
-            [2] = Vector3.new(-655.709228515625, 509.85272216796875, 178.39761352539062),
-            [3] = 0
-        }
-        game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(args1))
-
-        -- Another Pika
-        local args3 = {
-            [1] = "7278445232:56",
-            [2] = Vector3.new(-651.108154296875, 509.852783203125, 181.02072143554688),
-            [3] = 0
-        }
-        game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(args3))
-        
-        -- Goku
-        local args2 = {
-            [1] = "7278445232:50",
-            [2] = Vector3.new(-650.1400756835938, 509.8526916503906, 178.034912109375),
-            [3] = 0
-        }
-        game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(args2))
-        
-
-
-        wait(1) -- Đặt độ trễ giữa mỗi lần đặt unit
-        
-        if not autoPlaceEnabled then -- Kiểm tra nếu toggle bị tắt
-            break
-        end
-    end
-end
-
-local ToggleAutoPlace = Tabs.Unit:AddToggle("AutoPlaceToggle", {
-    Title = "Farm Valley of the End", 
-    Description = "Pika, Goku",
-    Default = false
-})
-
-ToggleAutoPlace:OnChanged(function()
-    autoPlaceEnabled = Options.AutoPlaceToggle.Value
-    if autoPlaceEnabled then
-        -- Khi bật toggle, bắt đầu vòng lặp
-        autoPlaceThread = coroutine.create(placeTowers)
-        coroutine.resume(autoPlaceThread)
-    else
-        -- Khi tắt toggle, dừng vòng lặp
-        autoPlaceEnabled = false
-    end
-end)
-
-Options.AutoPlaceToggle:SetValue(false)
-
-
+    -- MAP: valley of the end
+    local autoPlaceEnabled = false
+    local autoPlaceThread
     
-    --MAP TROST
-local autoPlaceEnabledM1 = false
-local autoPlaceThreadM1
-
-local function placeTowers()
-    while autoPlaceEnabledM1 do
---pika
-            local args = {
-    [1] = "7278445232:50",
-    [2] = Vector3.new(-79.51715087890625, -7.038638114929199, 112.28866577148438),
-    [3] = 0
-}
-
-game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(args))
-
-            local args = {
-    [1] = "7278445232:50",
-    [2] = Vector3.new(-85.17617797851562, -7.038638114929199, 115.06765747070312),
-    [3] = 0
-}
-
-game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(args))
---shank
-            local args = {
-    [1] = "7278445232:235",
-    [2] = Vector3.new(-80.18739318847656, -7.038638114929199, 107.5677490234375),
-    [3] = 0
-}
-
-game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(args))
-
-            local args = {
-    [1] = "7278445232:235",
-    [2] = Vector3.new(-84.18594360351562, -7.038638114929199, 109.19395446777344),
-    [3] = 0
-}
-
-game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(args))
-
-        
-
-
-        wait(1) -- Đặt độ trễ giữa mỗi lần đặt unit
-        
-        if not autoPlaceEnabledM1 then -- Kiểm tra nếu toggle bị tắt
-            break
+    local function placeTowers()
+        while autoPlaceEnabled do
+            -- Pika
+            local args1 = {
+                [1] = "7278445232:50",
+                [2] = Vector3.new(-655.709228515625, 509.85272216796875, 178.39761352539062),
+                [3] = 0
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(args1))
+    
+            -- Another Pika
+            local args3 = {
+                [1] = "7278445232:56",
+                [2] = Vector3.new(-651.108154296875, 509.852783203125, 181.02072143554688),
+                [3] = 0
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(args3))
+            
+            -- Goku
+            local args2 = {
+                [1] = "7278445232:50",
+                [2] = Vector3.new(-650.1400756835938, 509.8526916503906, 178.034912109375),
+                [3] = 0
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(args2))
+            
+    
+    
+            wait(1) -- Đặt độ trễ giữa mỗi lần đặt unit
+            
+            if not autoPlaceEnabled then -- Kiểm tra nếu toggle bị tắt
+                break
+            end
         end
     end
-end
-
-local ToggleAutoPlaceM1 = Tabs.Unit:AddToggle("AutoPlaceToggleM1", {
-    Title = "Farm Trost", 
-    Description = "Pika, Shank",
-    Default = false
-})
-
-ToggleAutoPlaceM1:OnChanged(function()
-    autoPlaceEnabledM1 = Options.AutoPlaceToggleM1.Value
-    if autoPlaceEnabledM1 then
-        -- Khi bật toggle, bắt đầu vòng lặp
-        autoPlaceThreadM1 = coroutine.create(placeTowers)
-        coroutine.resume(autoPlaceThreadM1)
-    else
-        -- Khi tắt toggle, dừng vòng lặp
-        autoPlaceEnabledM1 = false
+    
+    local ToggleAutoPlace = Tabs.Unit:AddToggle("AutoPlaceToggle", {
+        Title = "Farm Valley of the End", 
+        Description = "Pika, Goku",
+        Default = false
+    })
+    
+    ToggleAutoPlace:OnChanged(function()
+        autoPlaceEnabled = Options.AutoPlaceToggle.Value
+        if autoPlaceEnabled then
+            -- Khi bật toggle, bắt đầu vòng lặp
+            autoPlaceThread = coroutine.create(placeTowers)
+            coroutine.resume(autoPlaceThread)
+        else
+            -- Khi tắt toggle, dừng vòng lặp
+            autoPlaceEnabled = false
+        end
+    end)
+    
+    Options.AutoPlaceToggle:SetValue(false)
+    
+    
+        
+        --MAP TROST
+    local autoPlaceEnabledM1 = false
+    local autoPlaceThreadM1
+    
+    local function placeTowers()
+        while autoPlaceEnabledM1 do
+    --pika
+                local args = {
+        [1] = "7278445232:50",
+        [2] = Vector3.new(-79.51715087890625, -7.038638114929199, 112.28866577148438),
+        [3] = 0
+    }
+    
+    game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(args))
+    
+                local args = {
+        [1] = "7278445232:50",
+        [2] = Vector3.new(-85.17617797851562, -7.038638114929199, 115.06765747070312),
+        [3] = 0
+    }
+    
+    game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(args))
+    --shank
+                local args = {
+        [1] = "7278445232:235",
+        [2] = Vector3.new(-80.18739318847656, -7.038638114929199, 107.5677490234375),
+        [3] = 0
+    }
+    
+    game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(args))
+    
+                local args = {
+        [1] = "7278445232:235",
+        [2] = Vector3.new(-84.18594360351562, -7.038638114929199, 109.19395446777344),
+        [3] = 0
+    }
+    
+    game:GetService("ReplicatedStorage"):WaitForChild("GenericModules"):WaitForChild("Service"):WaitForChild("Network"):WaitForChild("PlayerPlaceTower"):FireServer(unpack(args))
+    
+            
+    
+    
+            wait(1) -- Đặt độ trễ giữa mỗi lần đặt unit
+            
+            if not autoPlaceEnabledM1 then -- Kiểm tra nếu toggle bị tắt
+                break
+            end
+        end
     end
-end)
-
-Options.ToggleAutoPlaceM1:SetValue(false)
+    
+    local ToggleAutoPlaceM1 = Tabs.Unit:AddToggle("AutoPlaceToggleM1", {
+        Title = "Farm Trost", 
+        Description = "Pika, Shank",
+        Default = false
+    })
+    
+    ToggleAutoPlaceM1:OnChanged(function()
+        autoPlaceEnabledM1 = Options.AutoPlaceToggleM1.Value
+        if autoPlaceEnabledM1 then
+            -- Khi bật toggle, bắt đầu vòng lặp
+            autoPlaceThreadM1 = coroutine.create(placeTowers)
+            coroutine.resume(autoPlaceThreadM1)
+        else
+            -- Khi tắt toggle, dừng vòng lặp
+            autoPlaceEnabledM1 = false
+        end
+    end)
+    
+    Options.ToggleAutoPlaceM1:SetValue(false)
 
 
 
